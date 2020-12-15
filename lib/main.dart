@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kcbweb_account_manage/config/custom_navigation.dart';
 import 'package:kcbweb_account_manage/config/locator.dart';
-import 'package:kcbweb_account_manage/pages/layout_template/layout_template.dart';
+import 'package:kcbweb_account_manage/layout/layout_template/layout_template.dart';
 import 'package:kcbweb_account_manage/route/route.dart' as Route;
 import 'package:kcbweb_account_manage/route/route_name.dart' as RouteName;
-import 'package:kcbweb_account_manage/utility/log_helper.dart';
-import 'package:flutter/foundation.dart';
+
 
 void main() {
   setupLocator();

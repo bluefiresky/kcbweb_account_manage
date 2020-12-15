@@ -1,6 +1,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:kcbweb_account_manage/pages/home_page.dart';
+import 'package:kcbweb_account_manage/pages/auth/login_page.dart';
 import 'package:kcbweb_account_manage/route/route_name.dart' as RouteName;
 import 'package:kcbweb_account_manage/utility/extensions/string_extension.dart';
 
@@ -11,11 +13,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
   switch(routingData.route) {
     case RouteName.LoginRoute:
-      return _generatePage(Center(child: Text('登陆页面'),), settings);
+      return _generatePage(LoginPage(), settings);
     case RouteName.HomeRoute:
-      return _generatePage(Center(child: Text('Home主页'),), settings);
+      return _generatePage(HomePage(), settings);
     default:
-      return _generatePage(Center(child: Text('登陆页面'),), settings);
+      return _generatePage(Center(child: Text('此页面不存在')), settings) ;
   }
 
 }

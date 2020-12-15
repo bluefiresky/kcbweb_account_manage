@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: 1.0.1
   responsive_builder: 0.3.0
   get_it: 5.0.1
+  fluttertoast: 7.1.5
 
 
 dev_dependencies:
