@@ -40,7 +40,7 @@ class LeftEdgeControllerState extends State<LeftEdgeController> {
   Widget build(BuildContext context) {
     return Container(
       width: 230,
-      color: Colors.indigo,
+      color: Color.fromRGBO(34, 54, 89, 1),
       child:Column(children: [
         this._renderGroupTitle(title: '平台账号管理', icon: Icons.group),
         this._renderItem(itemKey: LeftEdgeItem.ENABLE_ACCOUNT_LIST),

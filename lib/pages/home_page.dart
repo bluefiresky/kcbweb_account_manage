@@ -24,12 +24,13 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(children: [
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         LeftEdgeController(currentItem: this._currentPageKey, onChangeItem: this._onChangeList),
-        this._renderList()
+        Expanded(flex: 1, child:this._renderList())
       ]),
     );
   }
+
 
   /// renderSubView
   Widget _renderList(){

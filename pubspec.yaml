@@ -32,7 +32,6 @@ dependencies:
   get_it: 5.0.1
   fluttertoast: 7.1.5
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

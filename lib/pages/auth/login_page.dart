@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:kcbweb_account_manage/common/x_colors.dart';
 import 'package:kcbweb_account_manage/config/custom_navigation.dart';
 import 'package:kcbweb_account_manage/config/locator.dart';
 import 'package:kcbweb_account_manage/route/route_name.dart' as RouteName;
@@ -15,9 +16,11 @@ class LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Center(
-      child: RaisedButton(
+      child: FlatButton(
+        color: XColors.primary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         child: Text('登陆'),
-        onPressed: () { locator<CustomNavigation>().navigateTo(RouteName.HomeRoute); },
+        onPressed: () { locator<CustomNavigation>().replaceTo(RouteName.HomeRoute); },
       ),
     );
   }
