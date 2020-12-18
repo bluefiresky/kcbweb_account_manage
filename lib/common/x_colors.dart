@@ -11,4 +11,5 @@ class XColors {
 
   /// 辅助色
   static Color commonLine = Color.fromRGBO(226, 226, 226, 1);
+  static Color disabledButton = Color.fromRGBO(240, 240, 240, 1);
 }

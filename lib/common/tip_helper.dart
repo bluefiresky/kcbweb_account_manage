@@ -9,7 +9,7 @@ import 'package:kcbweb_account_manage/utility/log_helper.dart';
 
 class TipHelper {
 
-  static void toast({String msg, ToastGravity gravity, Toast toastLength}){
+  static void toast({@required String msg, ToastGravity gravity, Toast toastLength}){
     if(msg != null && msg.isNotEmpty) {
       Fluttertoast.showToast(
           msg: msg,
