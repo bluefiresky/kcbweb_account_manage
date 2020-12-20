@@ -10,7 +10,9 @@ enum RoleListType {
 class RoleListPage extends StatefulWidget {
 
   final RoleListType listType;
-  RoleListPage({Key key, this.listType}) : super(key: key);
+  final Function onChangeSubPage;
+
+  RoleListPage({Key key, this.listType, this.onChangeSubPage}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => RoleListPageState();

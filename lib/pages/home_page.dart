@@ -2,10 +2,19 @@
 import 'package:flutter/material.dart';
 import 'package:kcbweb_account_manage/common/ui_helper.dart';
 import 'package:kcbweb_account_manage/pages/account/account_list_page.dart';
+import 'package:kcbweb_account_manage/pages/account/edit_account_page.dart';
+import 'package:kcbweb_account_manage/pages/account/edit_account_pwd_page.dart';
+import 'package:kcbweb_account_manage/pages/account/edit_account_role_page.dart';
+import 'package:kcbweb_account_manage/pages/roles/edit_role_page.dart';
 import 'package:kcbweb_account_manage/pages/roles/role_list_page.dart';
 import 'package:kcbweb_account_manage/pages/widget/left_edge_controller.dart';
 import 'package:kcbweb_account_manage/common/tip_helper.dart';
 import 'package:kcbweb_account_manage/utility/log_helper.dart';
+
+import 'account/create_account_page.dart';
+import 'roles/create_role_page.dart';
+import 'widget/left_edge_controller.dart';
+import 'widget/left_edge_controller.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +24,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
 
   LeftEdgeItem _currentPageKey = LeftEdgeItem.ENABLE_ACCOUNT_LIST;
+  Map _propsParams = {};
 
   @override
   void initState() {
@@ -35,10 +45,19 @@ class HomePageState extends State<HomePage> {
   /// renderSubView
   Widget _renderList(){
     switch(this._currentPageKey) {
-      case LeftEdgeItem.ENABLE_ACCOUNT_LIST: return AccountListPage(key: UniqueKey(), listType: AccountListType.ENABLE);
-      case LeftEdgeItem.FORBIDDEN_ACCOUNT_LIST: return AccountListPage(key: UniqueKey(), listType: AccountListType.FORBIDDEN);
-      case LeftEdgeItem.ENABLE_ROLES_LIST: return RoleListPage(key: UniqueKey(), listType: RoleListType.ENABLE);
-      case LeftEdgeItem.FORBIDDEN_ROLES_LIST: return RoleListPage(key: UniqueKey(), listType: RoleListType.FORBIDDEN);
+      // 账户Pages
+      case LeftEdgeItem.ENABLE_ACCOUNT_LIST: return AccountListPage(key: UniqueKey(), listType: AccountListType.ENABLE, onChangeSubPage: this._onChangeToOperatePage,);
+      case LeftEdgeItem.FORBIDDEN_ACCOUNT_LIST: return AccountListPage(key: UniqueKey(), listType: AccountListType.FORBIDDEN, onChangeSubPage: this._onChangeToOperatePage);
+      case LeftEdgeItem.CREATE_ACCOUNT: return CreateAccountPage(propsParams: this._propsParams, onChangeSubPage: this._onChangeToOperatePage); break;
+      case LeftEdgeItem.EDIT_ACCOUNT: return EditAccountPage(propsParams: this._propsParams, onChangeSubPage: this._onChangeToOperatePage); break;
+      case LeftEdgeItem.EDIT_ACCOUNT_PWD: return EditAccountPwdPage(propsParams: this._propsParams, onChangeSubPage: this._onChangeToOperatePage); break;
+      case LeftEdgeItem.EDIT_ACCOUNT_ROLE: return EditAccountRolePage(propsParams: this._propsParams, onChangeSubPage: this._onChangeToOperatePage); break;
+      // 角色Pages
+      case LeftEdgeItem.ENABLE_ROLES_LIST: return RoleListPage(key: UniqueKey(), listType: RoleListType.ENABLE, onChangeSubPage: this._onChangeToOperatePage);
+      case LeftEdgeItem.FORBIDDEN_ROLES_LIST: return RoleListPage(key: UniqueKey(), listType: RoleListType.FORBIDDEN, onChangeSubPage: this._onChangeToOperatePage);
+      case LeftEdgeItem.CREATE_ROLE: return CreateRolePage(propsParams: this._propsParams, onChangeSubPage: this._onChangeToOperatePage); break;
+      case LeftEdgeItem.EDIT_ROLE: return EditRolePage(propsParams: this._propsParams, onChangeSubPage: this._onChangeToOperatePage); break;
+
       default: return UIHelper.emptyPage();
     }
   }
@@ -47,7 +66,14 @@ class HomePageState extends State<HomePage> {
   /// Event
   void _onChangeList(LeftEdgeItem leftEdgeItem){
     this._currentPageKey = leftEdgeItem;
-    LogHelper.v('111111111111113333 -->> $_currentPageKey');
+    LogHelper.v(' 000000 _onChangeList -->> $_currentPageKey');
+    setState(() {});
+  }
+
+  void _onChangeToOperatePage(LeftEdgeItem leftEdgeItem, Map params) {
+    this._currentPageKey = leftEdgeItem;
+    this._propsParams = params;
+    LogHelper.v(' 000000 _onChangeToOperatePage -->> $_currentPageKey -- propsParams -->> $_propsParams');
     setState(() {});
   }
 }

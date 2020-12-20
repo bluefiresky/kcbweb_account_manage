@@ -16,6 +16,12 @@ import 'package:kcbweb_account_manage/pages/widget/x_list_view.dart';
 import 'package:kcbweb_account_manage/remote/account_remoter.dart';
 import 'package:kcbweb_account_manage/utility/log_helper.dart';
 
+import '../../common/tip_helper.dart';
+import '../widget/left_edge_controller.dart';
+import '../widget/left_edge_controller.dart';
+import '../widget/left_edge_controller.dart';
+import '../widget/left_edge_controller.dart';
+
 enum AccountListType {
   ENABLE,
   FORBIDDEN
@@ -24,13 +30,17 @@ enum AccountListType {
 class AccountListPage extends StatefulWidget {
 
   final AccountListType listType;
-  AccountListPage({Key key, this.listType}) : super(key: key);
+  final Function onChangeSubPage;
+
+  AccountListPage({Key key, this.listType, this.onChangeSubPage}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => AccountListPageState();
 }
 
 class AccountListPageState extends State<AccountListPage> {
+
+  BuildContext _context;
 
   final List _tableColumnWidth = [200, 200, 200, 400];
   final double _columnHeight = 66;
@@ -53,6 +63,8 @@ class AccountListPageState extends State<AccountListPage> {
 
   @override
   Widget build(BuildContext context) {
+    this._context = context;
+
     return Container(
       alignment: Alignment.topLeft, color: XColors.page,
       child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Container(
@@ -98,8 +110,13 @@ class AccountListPageState extends State<AccountListPage> {
   }
 
   Widget _renderHeader(){
+    Widget createButton = widget.listType == AccountListType.ENABLE?
+      UIHelper.commonButton('创建新账号', () { this._onChangeToOperatePage(LeftEdgeItem.CREATE_ACCOUNT, {'id':'111'}); })
+        :
+      Container(height: 36,);
+
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      UIHelper.commonButton('创建新账号', () {}),
+      createButton,
       Divider(height: 40, color: XColors.commonLine, thickness: 1),
       Row(children: this._tableHeaderTitles.asMap().entries.map((e) => Container(
         width: this._tableColumnWidth[e.key], alignment: Alignment.centerLeft, height: 68, padding: EdgeInsets.only(left: 20),
@@ -135,17 +152,17 @@ class AccountListPageState extends State<AccountListPage> {
   Widget _renderOperation(){
     if(widget.listType == AccountListType.ENABLE) {
       return Row(children: [
-        UIHelper.borderButton('修改信息', (){}),
+        UIHelper.borderButton('修改信息', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT, {'id':'222'}); }),
         VerticalDivider(width: 15, color: Colors.transparent),
-        UIHelper.borderButton('修改密码', (){}),
+        UIHelper.borderButton('修改密码', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT, {'id':'333'}); }),
         VerticalDivider(width: 15, color: Colors.transparent),
-        UIHelper.borderButton('修改角色', (){}),
+        UIHelper.borderButton('修改角色', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT, {'id':'444'}); }),
         VerticalDivider(width: 15, color: Colors.transparent),
-        UIHelper.borderButton('禁用', (){}),
+        UIHelper.borderButton('禁用', (){ this._operateDialog('forbidden'); }),
       ]);
     } else {
       return Row(children: [
-        UIHelper.borderButton('启用', (){}),
+        UIHelper.borderButton('启用', (){ this._operateDialog('enable'); }),
       ]);
     }
   }
@@ -176,6 +193,19 @@ class AccountListPageState extends State<AccountListPage> {
     if(this._pageNum == page) return;
     this._pageNum = page;
     this._fetching();
+  }
+
+  void _onChangeToOperatePage(LeftEdgeItem leftEdgeItem, Map params){
+    widget.onChangeSubPage(leftEdgeItem, params);
+  }
+
+  void _operateDialog(String operate){
+    if(operate == 'enable') {
+      TipHelper.alert(context: this._context, title: '是否确定启用账号', content: '启用启用启用启用启用', onLeftPress: (){});
+    }
+    else if(operate == 'forbidden') {
+      TipHelper.alert(context: this._context, title: '是否确定停用账号', content: '停用停用停用停用停用', onLeftPress: (){});
+    }
   }
 }
 

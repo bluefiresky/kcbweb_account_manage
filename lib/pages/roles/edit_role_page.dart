@@ -1,18 +1,18 @@
 
 import 'package:flutter/material.dart';
 
-class CreateRolePage extends StatefulWidget {
+class EditRolePage extends StatefulWidget {
 
   final Map propsParams;
   final Function onChangeSubPage;
 
-  CreateRolePage({Key key, this.propsParams, this.onChangeSubPage}) : super(key: key);
+  EditRolePage({Key key, this.propsParams, this.onChangeSubPage}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => CreateRolePageState();
+  State<StatefulWidget> createState() => EditRolePageState();
 }
 
-class CreateRolePageState extends State<CreateRolePage> {
+class EditRolePageState extends State<EditRolePage> {
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class CreateRolePageState extends State<CreateRolePage> {
 
   /// SubView
   Widget _renderSubView(){
-    return Center(child: Text('CreateRolePage -- id -->> ${widget.propsParams['id']}'));
+    return Center(child: Text('EditRolePage -- id -->> ${widget.propsParams['id']}'));
   }
 
   /// Api

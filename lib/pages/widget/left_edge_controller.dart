@@ -6,8 +6,15 @@ import 'package:kcbweb_account_manage/common/tip_helper.dart';
 enum LeftEdgeItem {
   ENABLE_ACCOUNT_LIST,
   FORBIDDEN_ACCOUNT_LIST,
+  CREATE_ACCOUNT,
+  EDIT_ACCOUNT,
+  EDIT_ACCOUNT_PWD,
+  EDIT_ACCOUNT_ROLE,
+
   ENABLE_ROLES_LIST,
-  FORBIDDEN_ROLES_LIST
+  FORBIDDEN_ROLES_LIST,
+  CREATE_ROLE,
+  EDIT_ROLE,
 }
 
 class LeftEdgeController extends StatefulWidget {
@@ -79,12 +86,10 @@ class LeftEdgeControllerState extends State<LeftEdgeController> {
   }
 
   void onChangeItem(LeftEdgeItem leftEdgeItem) {
-    if(this._currentItem != leftEdgeItem) {
-      this._currentItem = leftEdgeItem;
-      setState(() {
-        if(widget.onChangeItem != null) { widget.onChangeItem(leftEdgeItem); }
-      });
-    }
+    this._currentItem = leftEdgeItem;
+    setState(() {
+      if(widget.onChangeItem != null) { widget.onChangeItem(leftEdgeItem); }
+    });
   }
 
   TextStyle _generateTextStyle (type) {
