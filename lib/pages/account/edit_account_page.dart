@@ -8,6 +8,7 @@ import 'package:kcbweb_account_manage/data_models/remote/account_remote_data.dar
 import 'package:kcbweb_account_manage/data_models/remote/remote_data.dart';
 import 'package:kcbweb_account_manage/data_models/remote/role_remote_data.dart';
 import 'package:kcbweb_account_manage/pages/widget/left_edge_controller.dart';
+import 'package:kcbweb_account_manage/pages/widget/x_input_view.dart';
 import 'package:kcbweb_account_manage/remote/account_remoter.dart';
 import 'package:kcbweb_account_manage/remote/mock_data.dart';
 import 'package:kcbweb_account_manage/remote/role_remoter.dart';
@@ -94,20 +95,11 @@ class EditAccountPageState extends State<EditAccountPage> {
   Widget _renderInput(String label, {String title, String value}){
     bool obscure = (label == 'password');
     int maxLines = (label == 'remark')? 5 : 1;
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      Container(
-          width: this.titleW, alignment: Alignment.centerRight, padding: EdgeInsets.only(right: 10),
-          child: Text(title, style: TextStyle(fontSize: 18, color: XColors.mainText),)
-      ),
-      Container(
-          width: this.inputW,
-          child: TextField(
-              style: TextStyle(fontSize: 16, height: 1.3),
-              obscureText: obscure, maxLines: maxLines, minLines: 1,
-              decoration: InputDecoration(labelText: '请输入', errorText: null, border: OutlineInputBorder()),
-              onChanged: (String text){ this._onTextChanged(label, text); })
-      )
-    ]);
+
+    return XInputView(
+        title: title, placeholder: '请输入', obscure: obscure, maxLines: maxLines,
+        onChanged: (String text) { this._onTextChanged(label, text); }
+    );
   }
 
   Widget _renderDropdownRow(String label, { String title, var value}){
