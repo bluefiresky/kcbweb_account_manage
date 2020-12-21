@@ -11,9 +11,10 @@ import 'package:kcbweb_account_manage/common/ui_helper.dart';
 import 'package:kcbweb_account_manage/common/x_colors.dart';
 import 'package:kcbweb_account_manage/data_models/remote/account_remote_data.dart';
 import 'package:kcbweb_account_manage/data_models/remote/pagination.dart';
-import 'package:kcbweb_account_manage/data_models/remote_data.dart';
+import 'package:kcbweb_account_manage/data_models/remote/remote_data.dart';
 import 'package:kcbweb_account_manage/pages/widget/x_list_view.dart';
 import 'package:kcbweb_account_manage/remote/account_remoter.dart';
+import 'package:kcbweb_account_manage/remote/mock_data.dart';
 import 'package:kcbweb_account_manage/utility/log_helper.dart';
 
 import '../../common/tip_helper.dart';
@@ -45,7 +46,7 @@ class AccountListPageState extends State<AccountListPage> {
   final List _tableColumnWidth = [200, 200, 200, 400];
   final double _columnHeight = 66;
   final List _tableHeaderTitles = ['ID', '账号', '账号名称', '操作'];
-  List<AccountModal> _dataList = [];
+  List<AccountModel> _dataList = [];
   Pagination _pagination;
   int _pageLimit = 8;
   int _pageNum = 1;
@@ -91,8 +92,9 @@ class AccountListPageState extends State<AccountListPage> {
       itemCount: this._dataList.length,
       itemHeight: this._columnHeight,
       renderItem: (context, index) {
-        AccountModal item = this._dataList[index];
+        AccountModel item = this._dataList[index];
         List temp = [item.id, item.account, item.accountName, 'operation'];
+
         return Container(
           decoration: BoxDecoration(color: (index%2 == 0)? Color.fromRGBO(246, 249, 253, 1) : Colors.white),
           child: Row(children: temp.asMap().entries.map((e) {
@@ -105,6 +107,7 @@ class AccountListPageState extends State<AccountListPage> {
             }
           }).toList()),
         );
+
       },
     );
   }
@@ -126,13 +129,14 @@ class AccountListPageState extends State<AccountListPage> {
   }
 
   Widget _renderFooter(){
-    if(this._dataList == null || this._dataList.length == 0) return UIHelper.emptyPage();
+    if(this._dataList?.length == 0) return UIHelper.emptyPage();
 
-    int currentNum = (this._pagination != null)? this._pagination.current : 1;
-    int totalNum = (this._pagination != null)? this._pagination.total : 0;
+    int currentNum = this._pagination?.current ?? 1;
+    int totalNum = this._pagination?.total ?? 0;
     int sumPageNum = (totalNum / this._pageLimit).ceil();
     List<Widget> pageNumList = List(sumPageNum).asMap().entries.map((e) => UIHelper.blockButton(e.key.toString(), (){ this._onChangeToPage(e.key); }, titleColor: (e.key == currentNum)? XColors.primary : XColors.mainText)).toList();
-    pageNumList.removeAt(0);
+    if(pageNumList.length > 0) pageNumList.removeAt(0);
+
     List<Widget> children = [
       UIHelper.borderButton('上一页', (){ this._onChangePage(-1); }, disabled: (currentNum <= 1)),
       VerticalDivider(width: 15, color: Colors.transparent),
@@ -173,10 +177,12 @@ class AccountListPageState extends State<AccountListPage> {
   void _fetching() async {
     String type = widget.listType == AccountListType.ENABLE? '启用列表':'禁用列表';
     TipHelper.toast(msg: 'Current List -->> $type');
-    RemoteData<AccountRemoteData> res =  await AccountRemoter.getAccountList(pageNum: this._pageNum, pageLimit: this._pageLimit);
-    if(res != null && res.data != null && res.data.list != null) {
+    RemoteData<AccountListData> res =  await AccountRemoter.getAccountList(pageNum: this._pageNum, pageLimit: this._pageLimit);
+    // res = MockData.getAccountList(this._pageNum, this._pageLimit);
+
+    if(res != null && res.statusCode == 200) {
       this._dataList = res.data.list;
-      this._pagination = res.data.pagination;
+      this._pagination = res.pagination;
       setState(() {});
     }
   }
@@ -207,15 +213,4 @@ class AccountListPageState extends State<AccountListPage> {
       TipHelper.alert(context: this._context, title: '是否确定停用账号', content: '停用停用停用停用停用', onLeftPress: (){});
     }
   }
-}
-
-
-/// Mock 数据
-RemoteData mock() {
-  List list = List(6).asMap().map((i, e) => MapEntry(i, mockItem(i, e))).values.toList();
-  return RemoteData(200, '', AccountRemoteData);
-}
-
-AccountModal mockItem(index, element) {
-  return AccountModal(id: "IDIDIDIDIDIDID-${index+1}", account: '账号账号账号账号账号账号-${index+1}', accountName: '你猜猜你猜猜你猜猜你猜猜你猜猜-${index+1}');
 }

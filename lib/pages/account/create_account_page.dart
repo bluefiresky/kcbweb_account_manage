@@ -1,9 +1,18 @@
 
 import 'package:flutter/material.dart';
+import 'package:kcbweb_account_manage/common/tip_helper.dart';
 
 import 'package:kcbweb_account_manage/common/ui_helper.dart';
 import 'package:kcbweb_account_manage/common/x_colors.dart';
+import 'package:kcbweb_account_manage/data_models/remote/account_remote_data.dart';
+import 'package:kcbweb_account_manage/data_models/remote/remote_data.dart';
+import 'package:kcbweb_account_manage/data_models/remote/role_remote_data.dart';
 import 'package:kcbweb_account_manage/pages/widget/left_edge_controller.dart';
+import 'package:kcbweb_account_manage/remote/account_remoter.dart';
+import 'package:kcbweb_account_manage/remote/mock_data.dart';
+import 'package:kcbweb_account_manage/remote/role_remoter.dart';
+import 'package:kcbweb_account_manage/utility/log_helper.dart';
+
 
 class CreateAccountPage extends StatefulWidget {
 
@@ -19,10 +28,13 @@ class CreateAccountPage extends StatefulWidget {
 class CreateAccountPageState extends State<CreateAccountPage> {
 
   String id;
-  String accountID;
-  String accountName;
-  String password;
-  String remark;
+
+  List<RoleModel> roleList;
+  AccountModel _accountDetail;
+
+  double titleW = 120;
+  double inputW = 500;
+
 
   @override
   void initState() {
@@ -65,47 +77,92 @@ class CreateAccountPageState extends State<CreateAccountPage> {
       alignment: Alignment.topCenter,
       child: Column(children: [
         this._renderInput('account-name', title: '账户名称：'),
-        Divider(height: 15,),
+        Divider(height: 15, color: Colors.transparent,),
         this._renderInput('account-id', title: '账户：'),
-        Divider(height: 15,),
+        Divider(height: 15, color: Colors.transparent,),
         this._renderInput('password', title: '密码：'),
-        Divider(height: 15,),
+        Divider(height: 15, color: Colors.transparent,),
+        this._renderDropdownRow('role-select', title: '角色：', value: this._accountDetail?.currentRole?.id),
+        Divider(height: 15, color: Colors.transparent,),
         this._renderInput('remark', title: '备注：'),
-        Divider(height: 66,),
-        UIHelper.commonButton('提交', () {}, width: 310, height: 54, titleStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold))
+        Divider(height: 66, color: Colors.transparent,),
+        UIHelper.commonButton('提交', () { this._submit(); }, width: 310, height: 54, titleStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold))
       ]),
     );
   }
 
   Widget _renderInput(String label, {String title, String value}){
     bool obscure = (label == 'password');
+    int maxLines = (label == 'remark')? 5 : 1;
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Container(
-          width: 120, alignment: Alignment.centerRight, padding: EdgeInsets.only(right: 10),
+          width: this.titleW, alignment: Alignment.centerRight, padding: EdgeInsets.only(right: 10),
           child: Text(title, style: TextStyle(fontSize: 18, color: XColors.mainText),)
       ),
       Container(
-          width: 500,
+          width: this.inputW,
           child: TextField(
-              obscureText: obscure,
+              style: TextStyle(fontSize: 16, height: 1.3),
+              obscureText: obscure, maxLines: maxLines, minLines: 1,
               decoration: InputDecoration(labelText: '请输入', errorText: null, border: OutlineInputBorder()),
               onChanged: (String text){ this._onTextChanged(label, text); })
       )
     ]);
   }
 
+  Widget _renderDropdownRow(String label, { String title, var value}){
+    List items = this.roleList?.map((e) {
+      return DropdownMenuItem(child: Text(e.roleName, style: TextStyle(height: 1.3, fontSize: 16)), value:e.id);
+    })?.toList();
+
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      Container(
+          width: this.titleW, alignment: Alignment.centerRight, padding: EdgeInsets.only(right: 10),
+          child: Text(title, style: TextStyle(fontSize: 18, color: XColors.mainText),)
+      ),
+      Container(
+        width: this.inputW,
+        child: DropdownButtonFormField(
+
+          isExpanded: true, decoration: InputDecoration(labelText: '请选择角色', border: OutlineInputBorder()),
+          items: items,
+          value: value,
+          onChanged: (value) {
+            List resultList = this.roleList.where((element) => (element.id == value)).toList();
+            if(this._accountDetail?.currentRole != null) {
+              this._accountDetail.currentRole = resultList.first;
+              setState(() {});
+            }
+          },
+        ),
+      )
+    ]);
+  }
+
+
   /// Api
-  void _fetching() {
-    // setState(() {});
+  void _fetching() async {
+    this._accountDetail = AccountModel();
+
+    RemoteData<RoleRemoteData> roleRes = await RoleRemoter.getRoleList(pageNum: 1, pageLimit: 10);
+    roleRes = MockData.getRoleList(1, 10);
+    this.roleList = roleRes?.data?.list ?? [];
+    this._accountDetail.currentRole = (this.roleList?.length ?? 0) > 0? this.roleList.first:null;
+
+    setState(() {});
+  }
+
+  void _submit(){
+    Logger.i(' 000000 -->> ${this._accountDetail.toString()}');
   }
 
   /// Events
   void _onTextChanged(String label, String value){
     switch(label) {
-      case 'account-name': this.accountName = value; break;
-      case 'account-id': this.accountID = value; break;
-      case 'password': this.password = value; break;
-      case 'remark': this.remark = value; break;
+      case 'account-name': this._accountDetail.accountName = value; break;
+      case 'account-id': this._accountDetail.accountID = value; break;
+      case 'password': this._accountDetail.password = value; break;
+      case 'remark': this._accountDetail.remark = value; break;
     }
   }
   

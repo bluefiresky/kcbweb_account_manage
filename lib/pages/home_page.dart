@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
 
-  LeftEdgeItem _currentPageKey = LeftEdgeItem.ENABLE_ACCOUNT_LIST;
+  LeftEdgeItem _currentPageKey = LeftEdgeItem.CREATE_ACCOUNT;
   Map _propsParams = {};
 
   @override
@@ -66,14 +66,14 @@ class HomePageState extends State<HomePage> {
   /// Event
   void _onChangeList(LeftEdgeItem leftEdgeItem){
     this._currentPageKey = leftEdgeItem;
-    LogHelper.v(' 000000 _onChangeList -->> $_currentPageKey');
+    Logger.d(' 000000 _onChangeList -->> $_currentPageKey');
     setState(() {});
   }
 
   void _onChangeToOperatePage(LeftEdgeItem leftEdgeItem, Map params) {
     this._currentPageKey = leftEdgeItem;
     this._propsParams = params;
-    LogHelper.v(' 000000 _onChangeToOperatePage -->> $_currentPageKey -- propsParams -->> $_propsParams');
+    Logger.d(' 000000 _onChangeToOperatePage -->> $_currentPageKey -- propsParams -->> $_propsParams');
     setState(() {});
   }
 }
