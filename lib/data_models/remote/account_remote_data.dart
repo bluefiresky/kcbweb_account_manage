@@ -15,6 +15,8 @@ class AccountModel {
 
   AccountModel();
 
+  AccountModel.from(this.id, this.accountID, this.account, this.accountName, this.password, this.remark, this.currentRole);
+
   AccountModel.fromData(Map data){
     if(data?.isNotEmpty ?? false) {
       this.id = data['id'] ?? '';

@@ -7,6 +7,7 @@ import 'package:kcbweb_account_manage/data_models/remote/remote_data.dart';
 import 'package:kcbweb_account_manage/data_models/remote/role_remote_data.dart';
 import 'package:kcbweb_account_manage/pages/widget/left_edge_controller.dart';
 import 'package:kcbweb_account_manage/pages/widget/x_input_view.dart';
+import 'package:kcbweb_account_manage/remote/account_remoter.dart';
 import 'package:kcbweb_account_manage/remote/mock_data.dart';
 import 'package:kcbweb_account_manage/remote/role_remoter.dart';
 import 'package:kcbweb_account_manage/utility/log_helper.dart';
@@ -58,7 +59,11 @@ class EditAccountRolePageState extends State<EditAccountRolePage> {
     return Container(
         alignment: Alignment.topLeft, margin: EdgeInsets.only(left: 20, right: 20, top: 20),
         decoration: BoxDecoration(color:Colors.white, border: Border.all(width: 1, color: XColors.commonLine), borderRadius: BorderRadius.circular(5)),
-        child: UIHelper.backButton((){ widget.onChangeSubPage(LeftEdgeItem.ENABLE_ACCOUNT_LIST, null); })
+        child: Row(children: [
+          UIHelper.backButton((){ widget.onChangeSubPage(LeftEdgeItem.ENABLE_ACCOUNT_LIST, null); }),
+          VerticalDivider(width: 10, color: Colors.transparent),
+          Text('修改角色', style: TextStyle(color: Colors.black, fontSize: 16))
+        ]),
     );
   }
 
@@ -76,7 +81,7 @@ class EditAccountRolePageState extends State<EditAccountRolePage> {
   Widget _renderInputView(){
     return Column(
       children: [
-        XInputView(title: '账号', placeholder: '请输入', readOnly: true, obscure: false,),
+        XInputView(title: '账号', keyword: this._accountDetail?.accountID, placeholder: '请输入', enabled: false, obscure: false,),
         Divider(height: 15, color: Colors.transparent),
         this._renderDropdownRow('current-role', title: '角色：', value: this._accountDetail?.currentRole?.id),
         Divider(height: 66, color: Colors.transparent,),
@@ -99,7 +104,6 @@ class EditAccountRolePageState extends State<EditAccountRolePage> {
       Container(
         width: this.inputW,
         child: DropdownButtonFormField(
-
           isExpanded: true, decoration: InputDecoration(labelText: '请选择角色', border: OutlineInputBorder()),
           items: items,
           value: value,
@@ -122,7 +126,10 @@ class EditAccountRolePageState extends State<EditAccountRolePage> {
     RemoteData<RoleRemoteData> roleRes = await RoleRemoter.getRoleList(pageNum: 1, pageLimit: 10);
     roleRes = MockData.getRoleList(1, 10);
     this.roleList = roleRes?.data?.list ?? [];
-    this._accountDetail.currentRole = (this.roleList?.length ?? 0) > 0? this.roleList.first:null;
+
+    RemoteData<AccountModel> accountRes = await AccountRemoter.getAccountDetail(id: '111');
+    accountRes = MockData.getAccountDetail('222', roleModel: (this.roleList?.length ?? 0) > 0? this.roleList.first:null);
+    this._accountDetail = accountRes.data;
 
     setState(() {});
 

@@ -158,9 +158,9 @@ class AccountListPageState extends State<AccountListPage> {
       return Row(children: [
         UIHelper.borderButton('修改信息', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT, {'id':'222'}); }),
         VerticalDivider(width: 15, color: Colors.transparent),
-        UIHelper.borderButton('修改密码', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT, {'id':'333'}); }),
+        UIHelper.borderButton('修改密码', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT_PWD, {'id':'333'}); }),
         VerticalDivider(width: 15, color: Colors.transparent),
-        UIHelper.borderButton('修改角色', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT, {'id':'444'}); }),
+        UIHelper.borderButton('修改角色', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT_ROLE, {'id':'444'}); }),
         VerticalDivider(width: 15, color: Colors.transparent),
         UIHelper.borderButton('禁用', (){ this._operateDialog('forbidden'); }),
       ]);

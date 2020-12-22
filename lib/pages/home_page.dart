@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
 
-  LeftEdgeItem _currentPageKey = LeftEdgeItem.EDIT_ACCOUNT_ROLE;
+  LeftEdgeItem _currentPageKey = LeftEdgeItem.ENABLE_ACCOUNT_LIST;
   Map _propsParams = {};
 
   @override

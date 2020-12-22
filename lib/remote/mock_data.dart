@@ -19,6 +19,18 @@ class MockData {
     return RemoteData(200, '', AccountListData.fromData(mockData), pagination: mockPagination);
   }
 
+  static RemoteData<AccountModel> getAccountDetail(String id, { RoleModel roleModel }) {
+    roleModel ??= RoleModel.from('role-id-$id', 'role-roleName-$id', 'role-roleDesc-$id');
+    return RemoteData(
+        200,
+        'message111',
+        AccountModel.from(
+            'id000', 'accountID-$id', 'account-$id', 'accountName-$id', 'password-$id', 'remark-$id',
+            roleModel,
+        )
+    );
+  }
+
   /// --- 角色列表
   static RemoteData<RoleRemoteData> getRoleList (int current, int pageSize){
     int index = 0;

@@ -66,9 +66,13 @@ class CreateAccountPageState extends State<CreateAccountPage> {
 
   Widget _renderBackView(){
     return Container(
-      alignment: Alignment.topLeft, margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-      decoration: BoxDecoration(color:Colors.white, border: Border.all(width: 1, color: XColors.commonLine), borderRadius: BorderRadius.circular(5)),
-      child: UIHelper.backButton((){ widget.onChangeSubPage(LeftEdgeItem.ENABLE_ACCOUNT_LIST, null); })
+        alignment: Alignment.topLeft, margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+        decoration: BoxDecoration(color:Colors.white, border: Border.all(width: 1, color: XColors.commonLine), borderRadius: BorderRadius.circular(5)),
+        child: Row(children: [
+          UIHelper.backButton((){ widget.onChangeSubPage(LeftEdgeItem.ENABLE_ACCOUNT_LIST, null); }),
+          VerticalDivider(width: 10, color: Colors.transparent),
+          Text('创建新账号', style: TextStyle(color: Colors.black, fontSize: 16))
+        ]),
     );
   }
 

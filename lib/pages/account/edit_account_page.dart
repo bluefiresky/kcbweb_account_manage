@@ -66,7 +66,11 @@ class EditAccountPageState extends State<EditAccountPage> {
     return Container(
         alignment: Alignment.topLeft, margin: EdgeInsets.only(left: 20, right: 20, top: 20),
         decoration: BoxDecoration(color:Colors.white, border: Border.all(width: 1, color: XColors.commonLine), borderRadius: BorderRadius.circular(5)),
-        child: UIHelper.backButton((){ widget.onChangeSubPage(LeftEdgeItem.ENABLE_ACCOUNT_LIST, null); })
+        child: Row(children: [
+          UIHelper.backButton((){ widget.onChangeSubPage(LeftEdgeItem.ENABLE_ACCOUNT_LIST, null); }),
+          VerticalDivider(width: 10, color: Colors.transparent),
+          Text('修改账户信息', style: TextStyle(color: Colors.black, fontSize: 16))
+        ]),
     );
   }
 
@@ -77,15 +81,15 @@ class EditAccountPageState extends State<EditAccountPage> {
     return Container(
       alignment: Alignment.topCenter,
       child: Column(children: [
-        this._renderInput('account-name', title: '账户名称：'),
-        Divider(height: 15, color: Colors.transparent,),
-        this._renderInput('account-id', title: '账户：'),
-        Divider(height: 15, color: Colors.transparent,),
-        this._renderInput('password', title: '密码：'),
-        Divider(height: 15, color: Colors.transparent,),
+        this._renderInput('account-name', title: '账户名称：', value: this._accountDetail?.accountName),
+        Divider(height: 15, color: Colors.transparent),
+        this._renderInput('account-id', title: '账户：', value: this._accountDetail?.accountID),
+        Divider(height: 15, color: Colors.transparent),
+        this._renderInput('password', title: '密码：', value: this._accountDetail?.password),
+        Divider(height: 15, color: Colors.transparent),
         this._renderDropdownRow('role-select', title: '角色：', value: this._accountDetail?.currentRole?.id),
-        Divider(height: 15, color: Colors.transparent,),
-        this._renderInput('remark', title: '备注：'),
+        Divider(height: 15, color: Colors.transparent),
+        this._renderInput('remark', title: '备注：', value: this._accountDetail?.remark),
         Divider(height: 66, color: Colors.transparent,),
         UIHelper.commonButton('提交', () { this._submit(); }, width: 310, height: 54, titleStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold))
       ]),
@@ -97,7 +101,7 @@ class EditAccountPageState extends State<EditAccountPage> {
     int maxLines = (label == 'remark')? 5 : 1;
 
     return XInputView(
-        title: title, placeholder: '请输入', obscure: obscure, maxLines: maxLines,
+        title: title, keyword: value, placeholder: '请输入', obscure: obscure, maxLines: maxLines,
         onChanged: (String text) { this._onTextChanged(label, text); }
     );
   }
@@ -115,7 +119,6 @@ class EditAccountPageState extends State<EditAccountPage> {
       Container(
         width: this.inputW,
         child: DropdownButtonFormField(
-
           isExpanded: true, decoration: InputDecoration(labelText: '请选择角色', border: OutlineInputBorder()),
           items: items,
           value: value,
@@ -140,6 +143,7 @@ class EditAccountPageState extends State<EditAccountPage> {
     this.roleList = res?.data?.list ?? [];
 
     RemoteData<AccountModel> accountRes = await AccountRemoter.getAccountDetail(id: '');
+    accountRes = MockData.getAccountDetail('111', roleModel: this.roleList.first);
     if(accountRes?.statusCode == 200) {
       this._accountDetail = accountRes.data;
     }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:kcbweb_account_manage/common/x_colors.dart';
+import 'package:kcbweb_account_manage/utility/log_helper.dart';
 
 class XInputView extends StatefulWidget {
 
@@ -9,15 +10,26 @@ class XInputView extends StatefulWidget {
   final double inputWidth;
 
   final String title;
+  final String keyword;
   final Function onChanged;
   final String placeholder;
   final bool obscure;
   final int maxLines;
-  final bool readOnly;
+  final bool enabled;
+  final TextEditingController textEditingController;
 
 
-  XInputView({this.title, this.onChanged, this.placeholder, this.obscure, this.maxLines, readOnly, titleWidth, inputWidth}) :
-        titleWidth = titleWidth ?? 120, inputWidth = inputWidth ?? 500, readOnly = readOnly ?? false;
+  XInputView({this.onChanged, title, keyword, placeholder, obscure, maxLines, enabled, textEditingController, titleWidth, inputWidth}) :
+        titleWidth = titleWidth ?? 120,
+        inputWidth = inputWidth ?? 500,
+
+        title = title ?? '',
+        keyword = keyword ?? '',
+        enabled = enabled ?? true,
+        placeholder = (enabled ?? true)? placeholder ?? '' : '',
+        obscure = obscure ?? false,
+        maxLines = maxLines ?? 1,
+        textEditingController = textEditingController ?? TextEditingController();
 
   @override
   State<StatefulWidget> createState() => XInputViewState();
@@ -28,6 +40,7 @@ class XInputViewState extends State<XInputView> {
 
   @override
   Widget build(BuildContext context) {
+    widget.textEditingController.text = widget.keyword;
 
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Container(
@@ -37,11 +50,12 @@ class XInputViewState extends State<XInputView> {
       Container(
           width: widget.inputWidth,
           child: TextField(
-              readOnly: widget.readOnly,
+              controller: widget.textEditingController,
               style: TextStyle(fontSize: 16, height: 1.3),
-              obscureText: widget.obscure, maxLines: widget.maxLines ?? 1, minLines: 1,
-              decoration: InputDecoration(labelText: widget.placeholder ?? '', errorText: null, border: OutlineInputBorder()),
-              onChanged: (String text){ widget.onChanged(text); })
+              obscureText: widget.obscure, maxLines: widget.maxLines, minLines: 1,
+              decoration: InputDecoration(enabled: widget.enabled, labelText: widget.placeholder, errorText: null, border: OutlineInputBorder()),
+              onChanged: (String text){ widget.onChanged(text); },
+          )
       )
     ]);
   }

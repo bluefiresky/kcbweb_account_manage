@@ -33,9 +33,10 @@ class Logger {
 
 
   static void _printLog(String tag, int level, Object object) {
-    StringBuffer sb = new StringBuffer();
-    sb.write((tag == null || tag.isEmpty) ? _Default_Tag : tag);
-    sb.write(object);
+    StringBuffer sb = StringBuffer()
+      ..write((tag == null || tag.isEmpty) ? _Default_Tag : tag)
+      ..write(object);
+
     switch(level) {
       case 1: Log.V(tag, sb.toString()); break;
       case 2: Log.I(tag, sb.toString()); break;

@@ -10,6 +10,8 @@ class RoleModel {
 
   RoleModel();
 
+  RoleModel.from(this.id, this.roleName, this.roleDesc);
+
   RoleModel.fromData(Map data){
     if(data?.isNotEmpty ?? false) {
       this.id = data['id'] ?? '';
