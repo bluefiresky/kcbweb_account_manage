@@ -27,7 +27,7 @@ class FetchFactory {
           var jsonRes = convert.jsonDecode(response.body);
           int errorCode = jsonRes['statusCode'];
 
-          Logger.i('the path -->> $path -- response statusCode -->> $errorCode', tag: TAG);
+          Logger.i('the path -->> $path -- response statusCode -->> $errorCode', tag: '${TAG}response');
           if(errorCode == 200) {
             return RemoteData(errorCode, jsonRes['message'], jsonRes['data']);
           }
@@ -51,19 +51,19 @@ class FetchFactory {
     }
   }
 
-  static _generatePath(String path, String version){
+  static _generatePath(String path, String version, Map params){
     String url;
 
     if(version?.isNotEmpty ?? false) url = '$SERVICE_URL/api/$version/app/$path';
     else url = '$SERVICE_URL$API_PRE$path';
 
-    Logger.i("the fetch url -->> $url", tag: TAG);
+    Logger.i("the fetch url -->> $url and the parsms -->> ${convert.jsonEncode(params)}", tag: '${TAG}fetch');
     return url;
   }
 
   /// Method Factory
   static get (String url, { String version, Map params }) async {
-    String path = _generatePath(url, version);
+    String path = _generatePath(url, version, params);
     if(params?.isNotEmpty ?? false) {
       StringBuffer sb = new StringBuffer('?');
       params.forEach((key, value) { sb.write('$key=$value&'); });
@@ -82,7 +82,7 @@ class FetchFactory {
   }
 
   static post (String url, { String version, Map params}) async {
-    String path = _generatePath(url, version);
+    String path = _generatePath(url, version, params);
 
 
     try{

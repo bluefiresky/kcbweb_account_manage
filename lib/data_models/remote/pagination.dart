@@ -9,4 +9,8 @@ class Pagination {
   toMap(){
     return { 'total':this.total, 'current':this.current, 'pageSize':this.pageSize };
   }
+
+  toString(){
+    return 'total: $total -- current:$current -- pageSize:$pageSize';
+  }
 }

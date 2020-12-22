@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kcbweb_account_manage/common/tip_helper.dart';
 
 import 'package:kcbweb_account_manage/common/ui_helper.dart';
+import 'package:kcbweb_account_manage/common/widget/x_button.dart';
 import 'package:kcbweb_account_manage/common/x_colors.dart';
 import 'package:kcbweb_account_manage/data_models/remote/account_remote_data.dart';
 import 'package:kcbweb_account_manage/data_models/remote/remote_data.dart';
@@ -91,7 +92,8 @@ class CreateAccountPageState extends State<CreateAccountPage> {
         Divider(height: 15, color: Colors.transparent,),
         this._renderInput('remark', title: '备注：'),
         Divider(height: 66, color: Colors.transparent,),
-        UIHelper.commonButton('提交', () { this._submit(); }, width: 310, height: 54, titleStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold))
+        XButton(title: '提交', onPress: () { this._submit(); }, width: 310, height: 54, titleSize: 18, titleColor: XColors.primaryText, color: XColors.primary)
+        // UIHelper.commonButton('提交', () { this._submit(); }, width: 310, height: 54, titleStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold))
       ]),
     );
   }
@@ -140,7 +142,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
   void _fetching() async {
     this._accountDetail = AccountModel();
 
-    RemoteData<RoleRemoteData> roleRes = await RoleRemoter.getRoleList(pageNum: 1, pageLimit: 10);
+    RemoteData<RoleListData> roleRes = await RoleRemoter.getRoleList(pageNum: 1, pageLimit: 10);
     roleRes = MockData.getRoleList(1, 10);
     this.roleList = roleRes?.data?.list ?? [];
     this._accountDetail.currentRole = (this.roleList?.length ?? 0) > 0? this.roleList.first:null;

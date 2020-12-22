@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:kcbweb_account_manage/common/x_colors.dart';
 
 class TempPage extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() => TempPageState();
 }
@@ -16,7 +18,10 @@ class TempPageState extends State<TempPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: this._renderSubView());
+    return Container(
+        color: XColors.page, alignment: Alignment.topLeft,
+        child: this._renderSubView()
+    );
   }
 
   /// SubView

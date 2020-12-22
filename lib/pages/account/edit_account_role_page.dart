@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:kcbweb_account_manage/common/ui_helper.dart';
+import 'package:kcbweb_account_manage/common/widget/x_button.dart';
 import 'package:kcbweb_account_manage/common/x_colors.dart';
 import 'package:kcbweb_account_manage/data_models/remote/account_remote_data.dart';
 import 'package:kcbweb_account_manage/data_models/remote/remote_data.dart';
@@ -84,8 +85,8 @@ class EditAccountRolePageState extends State<EditAccountRolePage> {
         XInputView(title: '账号', keyword: this._accountDetail?.accountID, placeholder: '请输入', enabled: false, obscure: false,),
         Divider(height: 15, color: Colors.transparent),
         this._renderDropdownRow('current-role', title: '角色：', value: this._accountDetail?.currentRole?.id),
-        Divider(height: 66, color: Colors.transparent,),
-        UIHelper.commonButton('提交', () { this._submit(); }, width: 310, height: 54, titleStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold))
+        Divider(height: 66, color: Colors.transparent),
+        XButton(title: '提交', onPress: () { this._submit(); }, width: 310, height: 54, titleSize: 18, titleColor: XColors.primaryText, color: XColors.primary),
       ],
     );
   }
@@ -123,7 +124,7 @@ class EditAccountRolePageState extends State<EditAccountRolePage> {
   void _fetching() async {
     this._accountDetail = AccountModel();
 
-    RemoteData<RoleRemoteData> roleRes = await RoleRemoter.getRoleList(pageNum: 1, pageLimit: 10);
+    RemoteData<RoleListData> roleRes = await RoleRemoter.getRoleList(pageNum: 1, pageLimit: 10);
     roleRes = MockData.getRoleList(1, 10);
     this.roleList = roleRes?.data?.list ?? [];
 

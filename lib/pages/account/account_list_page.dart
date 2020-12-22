@@ -2,12 +2,12 @@
 import 'dart:async';
 import 'dart:html';
 import 'dart:convert' as convert;
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kcbweb_account_manage/common/tip_helper.dart';
 import 'package:kcbweb_account_manage/common/ui_helper.dart';
+import 'package:kcbweb_account_manage/common/widget/x_button.dart';
 import 'package:kcbweb_account_manage/common/x_colors.dart';
 import 'package:kcbweb_account_manage/data_models/remote/account_remote_data.dart';
 import 'package:kcbweb_account_manage/data_models/remote/pagination.dart';
@@ -16,12 +16,9 @@ import 'package:kcbweb_account_manage/pages/widget/x_list_view.dart';
 import 'package:kcbweb_account_manage/remote/account_remoter.dart';
 import 'package:kcbweb_account_manage/remote/mock_data.dart';
 import 'package:kcbweb_account_manage/utility/log_helper.dart';
+import 'package:kcbweb_account_manage/common/tip_helper.dart';
+import 'package:kcbweb_account_manage/pages/widget/left_edge_controller.dart';
 
-import '../../common/tip_helper.dart';
-import '../widget/left_edge_controller.dart';
-import '../widget/left_edge_controller.dart';
-import '../widget/left_edge_controller.dart';
-import '../widget/left_edge_controller.dart';
 
 enum AccountListType {
   ENABLE,
@@ -48,7 +45,7 @@ class AccountListPageState extends State<AccountListPage> {
   final List _tableHeaderTitles = ['ID', '账号', '账号名称', '操作'];
   List<AccountModel> _dataList = [];
   Pagination _pagination;
-  int _pageLimit = 8;
+  int _pageLimit = 10;
   int _pageNum = 1;
 
   @override
@@ -114,7 +111,7 @@ class AccountListPageState extends State<AccountListPage> {
 
   Widget _renderHeader(){
     Widget createButton = widget.listType == AccountListType.ENABLE?
-      UIHelper.commonButton('创建新账号', () { this._onChangeToOperatePage(LeftEdgeItem.CREATE_ACCOUNT, {'id':'111'}); })
+      XButton(title: '创建新账号', onPress: () { this._onChangeToOperatePage(LeftEdgeItem.CREATE_ACCOUNT, {'id':'111'}); }, titleSize: 15, titleColor: XColors.primaryText, color: XColors.primary)
         :
       Container(height: 36,);
 
@@ -134,14 +131,16 @@ class AccountListPageState extends State<AccountListPage> {
     int currentNum = this._pagination?.current ?? 1;
     int totalNum = this._pagination?.total ?? 0;
     int sumPageNum = (totalNum / this._pageLimit).ceil();
-    List<Widget> pageNumList = List(sumPageNum).asMap().entries.map((e) => UIHelper.blockButton(e.key.toString(), (){ this._onChangeToPage(e.key); }, titleColor: (e.key == currentNum)? XColors.primary : XColors.mainText)).toList();
+    List<Widget> pageNumList = List(sumPageNum).asMap().entries.map((e) =>
+        XButton(width: 32, height: 32, title: e.key.toString(), onPress: (){ this._onChangeToPage(e.key); }, color: Colors.white, disableTitleColor: XColors.primary, disable: (e.key == currentNum))
+    ).toList();
     if(pageNumList.length > 0) pageNumList.removeAt(0);
 
     List<Widget> children = [
-      UIHelper.borderButton('上一页', (){ this._onChangePage(-1); }, disabled: (currentNum <= 1)),
+      XButton(title: '上一页', onPress: () { this._onChangePage(-1); }, disable: (currentNum <= 1), color: Colors.white, border: true),
       VerticalDivider(width: 15, color: Colors.transparent),
       VerticalDivider(width: 15, color: Colors.transparent),
-      UIHelper.borderButton('下一页', (){ this._onChangePage(1);}, disabled: (currentNum >= sumPageNum))
+      XButton(title: '下一页', onPress: () { this._onChangePage(1); }, disable: (currentNum >= sumPageNum), color: Colors.white, border: true)
     ];
     children.insertAll(2, pageNumList);
 
@@ -156,17 +155,17 @@ class AccountListPageState extends State<AccountListPage> {
   Widget _renderOperation(){
     if(widget.listType == AccountListType.ENABLE) {
       return Row(children: [
-        UIHelper.borderButton('修改信息', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT, {'id':'222'}); }),
+        XButton(title: '修改信息', onPress: (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT, {'id':'222'}); }, color: Colors.white, border: true),
         VerticalDivider(width: 15, color: Colors.transparent),
-        UIHelper.borderButton('修改密码', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT_PWD, {'id':'333'}); }),
+        XButton(title: '修改密码', onPress: (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT_PWD, {'id':'333'}); }, color: Colors.white, border: true),
         VerticalDivider(width: 15, color: Colors.transparent),
-        UIHelper.borderButton('修改角色', (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT_ROLE, {'id':'444'}); }),
+        XButton(title: '修改角色', onPress: (){ this._onChangeToOperatePage(LeftEdgeItem.EDIT_ACCOUNT_ROLE, {'id':'444'}); }, color: Colors.white, border: true),
         VerticalDivider(width: 15, color: Colors.transparent),
-        UIHelper.borderButton('禁用', (){ this._operateDialog('forbidden'); }),
+        XButton(title: '禁用', onPress: (){ this._operateDialog('forbidden'); }, color: Colors.white, border: true),
       ]);
     } else {
       return Row(children: [
-        UIHelper.borderButton('启用', (){ this._operateDialog('enable'); }),
+        XButton(title: '启用', onPress: (){ this._operateDialog('enable'); }, color: Colors.white, border: true),
       ]);
     }
   }

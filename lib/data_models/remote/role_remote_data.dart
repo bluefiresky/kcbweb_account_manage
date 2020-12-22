@@ -27,13 +27,13 @@ class RoleModel {
 }
 
 
-class RoleRemoteData {
+class RoleListData {
 
   List<RoleModel> list = [];
 
-  RoleRemoteData(this.list);
+  RoleListData(this.list);
 
-  RoleRemoteData.fromData(Map data){
+  RoleListData.fromData(Map data){
     List l = data['list'];
     int index = 0;
     l.forEach((element) {

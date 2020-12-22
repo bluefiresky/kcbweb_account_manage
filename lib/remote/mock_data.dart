@@ -32,7 +32,7 @@ class MockData {
   }
 
   /// --- 角色列表
-  static RemoteData<RoleRemoteData> getRoleList (int current, int pageSize){
+  static RemoteData<RoleListData> getRoleList (int current, int pageSize){
     int index = 0;
     List list = [];
     List(pageSize).forEach((element) {
@@ -43,7 +43,7 @@ class MockData {
     Map mockData = { 'list': list };
     Pagination mockPagination = Pagination(total: 100, current: current, pageSize: pageSize);
 
-    return RemoteData(200, '', RoleRemoteData.fromData(mockData), pagination: mockPagination);
+    return RemoteData(200, '', RoleListData.fromData(mockData), pagination: mockPagination);
   }
 
 }
