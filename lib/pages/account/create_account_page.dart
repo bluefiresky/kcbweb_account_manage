@@ -70,7 +70,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
         alignment: Alignment.topLeft, margin: EdgeInsets.only(left: 20, right: 20, top: 20),
         decoration: BoxDecoration(color:Colors.white, border: Border.all(width: 1, color: XColors.commonLine), borderRadius: BorderRadius.circular(5)),
         child: Row(children: [
-          UIHelper.backButton((){ widget.onChangeSubPage(LeftEdgeItem.ENABLE_ACCOUNT_LIST, null); }),
+          UIHelper.backButton((){ widget.onChangeSubPage(LeftEdgeItem.ENABLE_ROLES_LIST, null); }),
           VerticalDivider(width: 10, color: Colors.transparent),
           Text('创建新账号', style: TextStyle(color: Colors.black, fontSize: 16))
         ]),
@@ -93,7 +93,6 @@ class CreateAccountPageState extends State<CreateAccountPage> {
         this._renderInput('remark', title: '备注：'),
         Divider(height: 66, color: Colors.transparent,),
         XButton(title: '提交', onPress: () { this._submit(); }, width: 310, height: 54, titleSize: 18, titleColor: XColors.primaryText, color: XColors.primary)
-        // UIHelper.commonButton('提交', () { this._submit(); }, width: 310, height: 54, titleStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold))
       ]),
     );
   }

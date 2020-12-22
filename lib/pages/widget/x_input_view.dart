@@ -19,17 +19,14 @@ class XInputView extends StatefulWidget {
   final TextEditingController textEditingController;
 
 
-  XInputView({this.onChanged, title, keyword, placeholder, obscure, maxLines, enabled, textEditingController, titleWidth, inputWidth}) :
-        titleWidth = titleWidth ?? 120,
-        inputWidth = inputWidth ?? 500,
-
-        title = title ?? '',
-        keyword = keyword ?? '',
-        enabled = enabled ?? true,
-        placeholder = (enabled ?? true)? placeholder ?? '' : '',
-        obscure = obscure ?? false,
-        maxLines = maxLines ?? 1,
-        textEditingController = textEditingController ?? TextEditingController();
+  XInputView({
+    this.onChanged,
+    this.title = '', this.keyword = '', this.placeholder = '',
+    this.obscure = false, this.maxLines = 1, this.enabled = true,
+    textEditingController,
+    this.titleWidth = 120, this.inputWidth = 500})
+      :
+      textEditingController = textEditingController ?? TextEditingController();
 
   @override
   State<StatefulWidget> createState() => XInputViewState();

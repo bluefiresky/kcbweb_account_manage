@@ -14,7 +14,7 @@ import 'package:kcbweb_account_manage/utility/log_helper.dart';
 import 'account/create_account_page.dart';
 import 'roles/create_role_page.dart';
 import 'widget/left_edge_controller.dart';
-import 'widget/left_edge_controller.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
 
-  LeftEdgeItem _currentPageKey = LeftEdgeItem.ENABLE_ROLES_LIST;
+  LeftEdgeItem _currentPageKey = LeftEdgeItem.ENABLE_ACCOUNT_LIST;
   Map _propsParams = {};
 
   @override
@@ -66,14 +66,12 @@ class HomePageState extends State<HomePage> {
   /// Event
   void _onChangeList(LeftEdgeItem leftEdgeItem){
     this._currentPageKey = leftEdgeItem;
-    Logger.d(' 000000 _onChangeList -->> $_currentPageKey');
     setState(() {});
   }
 
   void _onChangeToOperatePage(LeftEdgeItem leftEdgeItem, Map params) {
     this._currentPageKey = leftEdgeItem;
     this._propsParams = params;
-    Logger.d(' 000000 _onChangeToOperatePage -->> $_currentPageKey -- propsParams -->> $_propsParams');
     setState(() {});
   }
 }

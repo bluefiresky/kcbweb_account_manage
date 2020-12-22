@@ -46,4 +46,8 @@ class MockData {
     return RemoteData(200, '', RoleListData.fromData(mockData), pagination: mockPagination);
   }
 
+  /// -- 角色详情
+  static RemoteData<RoleModel> getRoleDetail(String id){
+    return RemoteData(200, '', RoleModel.from('000-$id', 'roleName-$id', 'roleDesc-$id'));
+  }
 }

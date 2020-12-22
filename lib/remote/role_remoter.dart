@@ -24,5 +24,13 @@ class RoleRemoter {
     return null;
   }
 
+  static Future<RemoteData<RoleModel>> getRoleDetail({@required String id}) async {
+    RemoteData res = await FetchFactory.post('', params: { 'id': id }, version: 'v200');
+    if(res != null) {
+      return RemoteData(res.statusCode, res.message, RoleModel.fromData(res.data));
+    }
+    return null;
+  }
+
 }
 

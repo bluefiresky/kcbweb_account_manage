@@ -193,10 +193,10 @@ class RoleListPageState extends State<RoleListPage> {
 
   void _operateDialog(String operate){
     if(operate == 'enable') {
-      TipHelper.alert(context: this._context, title: '是否确定启用账号', content: '启用启用启用启用启用', onLeftPress: (){});
+      TipHelper.alert(context: this._context, title: '是否确定启用角色', content: '启用启用启用启用启用', onLeftPress: (){});
     }
     else if(operate == 'forbidden') {
-      TipHelper.alert(context: this._context, title: '是否确定停用账号', content: '停用停用停用停用停用', onLeftPress: (){});
+      TipHelper.alert(context: this._context, title: '是否确定禁用角色', content: '停用停用停用停用停用', onLeftPress: (){});
     }
   }
 }
