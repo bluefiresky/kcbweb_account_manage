@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:kcbweb_account_manage/common/ui_helper.dart';
 import 'package:kcbweb_account_manage/common/tip_helper.dart';
+import 'package:kcbweb_account_manage/common/x_colors.dart';
 
 enum LeftEdgeItem {
   ENABLE_ACCOUNT_LIST,
@@ -47,8 +48,8 @@ class LeftEdgeControllerState extends State<LeftEdgeController> {
   Widget build(BuildContext context) {
     return Container(
       width: 230,
-      color: Color.fromRGBO(34, 54, 89, 1),
-      child:Column(children: [
+      color: XColors.menuBg,
+      child: Column(children: [
         this._renderGroupTitle(title: '平台账号管理', icon: Icons.group),
         this._renderItem(itemKey: LeftEdgeItem.ENABLE_ACCOUNT_LIST),
         this._renderItem(itemKey: LeftEdgeItem.FORBIDDEN_ACCOUNT_LIST),

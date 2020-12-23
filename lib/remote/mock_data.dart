@@ -1,8 +1,13 @@
 
+import 'package:kcbweb_account_manage/data_models/account_model.dart';
+import 'package:kcbweb_account_manage/data_models/auth_model.dart';
 import 'package:kcbweb_account_manage/data_models/remote/account_remote_data.dart';
 import 'package:kcbweb_account_manage/data_models/remote/pagination.dart';
 import 'package:kcbweb_account_manage/data_models/remote/remote_data.dart';
 import 'package:kcbweb_account_manage/data_models/remote/role_remote_data.dart';
+import 'package:kcbweb_account_manage/data_models/role_model.dart';
+
+
 
 class MockData {
 
@@ -49,5 +54,11 @@ class MockData {
   /// -- 角色详情
   static RemoteData<RoleModel> getRoleDetail(String id){
     return RemoteData(200, '', RoleModel.from('000-$id', 'roleName-$id', 'roleDesc-$id'));
+  }
+
+
+  // -- 用户登录成功数据
+  static RemoteData<AuthModel> login(String account, String password){
+    return RemoteData(200, '', AuthModel('000001-$account', 'token-$password-89798w7er98q7we89r7q8w9e'));
   }
 }

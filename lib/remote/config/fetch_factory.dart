@@ -5,7 +5,7 @@ import 'dart:developer' as developer;
 import 'package:http/http.dart' as http;
 import 'package:kcbweb_account_manage/common/tip_helper.dart';
 import 'package:kcbweb_account_manage/data_models/remote/remote_data.dart';
-import 'package:kcbweb_account_manage/remote/fetch_config.dart';
+import 'package:kcbweb_account_manage/remote/config/fetch_config.dart';
 import 'package:kcbweb_account_manage/utility/log_helper.dart';
 
 
@@ -17,7 +17,7 @@ class FetchFactory {
   /// Action
   static RemoteData generateResData(http.Response response, String path, Map params){
     if(response == null)  {
-      Logger.e('the path -->> $path \nthe response -->> null \nthe params  -->> ${convert.jsonEncode(params)}', tag: '${TAG}response');
+      Logger.e('\n  path -->> $path \n  params -->> ${convert.jsonEncode(params)}', tag: '${TAG}request');
       TipHelper.toast(msg:'网络连接异常，请稍后重试');
       return null;
     }
@@ -25,11 +25,11 @@ class FetchFactory {
       try {
         if(response.statusCode == 200) {
           var jsonRes = convert.jsonDecode(response.body);
-          int errorCode = jsonRes['statusCode'];
+          int resStatusCode = jsonRes['statusCode'];
 
-          if(errorCode == 200) {
-            Logger.i('the path -->> $path \nthe response statusCode -->> $errorCode \nthe params -->> ${convert.jsonEncode(params)}', tag: '${TAG}response');
-            return RemoteData(errorCode, jsonRes['message'], jsonRes['data']);
+          if(resStatusCode == 200) {
+            Logger.i('\n  statusCode -->> $resStatusCode \n  path -->> $path \n  params -->> ${convert.jsonEncode(params)} \n  res -->> ', object: jsonRes, tag: '${TAG}response');
+            return RemoteData(resStatusCode, jsonRes['message'], jsonRes['data']);
           }
           else {
             String tip;
@@ -37,15 +37,16 @@ class FetchFactory {
             tip = (message?.isNotEmpty ?? false)? message : '数据获取异常，请稍后重试';
             TipHelper.toast(msg: tip);
 
-            Logger.e('the path -->> $path \nthe response statusCode -->> $errorCode and message -->> $tip \nthe params -->> ${convert.jsonEncode(params)}', tag: '${TAG}response');
+            Logger.e('\n  statusCode -->> $resStatusCode -- message -->> $tip \n  path -->> $path \n  params -->> ${convert.jsonEncode(params)}', tag: '${TAG}response');
             return null;
           }
         }else {
+          Logger.e('\n  http statusCode -->> ${response.statusCode}', tag: '${TAG}response');
           TipHelper.toast(msg:'网络连接异常，请稍后重试');
           return null;
         }
       }catch(exception){
-        Logger.e('000 generateResData -->> $exception', tag: '${TAG}response');
+        Logger.e('\n  generateResData error -->>', object: exception, tag: '${TAG}response');
         return null;
       }
     }
@@ -75,7 +76,6 @@ class FetchFactory {
       http.Response response = await http.get(path, headers: headers);
       return generateResData(response, path, params);
     }catch (exception){
-      Logger.e('000000 GET exception -->> $exception', tag: TAG);
       return generateResData(null, null, params);
     }
   }
@@ -89,7 +89,6 @@ class FetchFactory {
       http.Response response = await http.post(path, headers: headers, body:body);
       return generateResData(response, path, params);
     }catch(exception){
-      Logger.e('000000 POST exception -->> $exception');
       return generateResData(null, null, params);
     }
   }
