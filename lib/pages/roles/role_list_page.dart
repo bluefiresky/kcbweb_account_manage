@@ -161,7 +161,6 @@ class RoleListPageState extends State<RoleListPage> {
   /// Api
   void _fetching() async {
     String listDesc = widget.listType == RoleListType.ENABLE?'启用列表':'禁用列表';
-    TipHelper.toast(msg: listDesc);
 
     RemoteData<RoleListData> listRes = await RoleRemoter.getRoleList(pageNum: this._pageNum, pageLimit: this._pageLimit);
     listRes = MockData.getRoleList(this._pageNum, this._pageLimit);
@@ -191,10 +190,10 @@ class RoleListPageState extends State<RoleListPage> {
 
   void _operateDialog(String operate){
     if(operate == 'enable') {
-      TipHelper.alert(context: this._context, title: '是否确定启用角色', content: '启用启用启用启用启用', onLeftPress: (){});
+      Tipper.dialog(context: this._context, title: '是否确定启用角色', content: '启用启用启用启用启用', onLeftPress: (){});
     }
     else if(operate == 'forbidden') {
-      TipHelper.alert(context: this._context, title: '是否确定禁用角色', content: '停用停用停用停用停用', onLeftPress: (){});
+      Tipper.dialog(context: this._context, title: '是否确定禁用角色', content: '停用停用停用停用停用', onLeftPress: (){});
     }
   }
 }

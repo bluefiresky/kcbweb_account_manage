@@ -168,7 +168,6 @@ class AccountListPageState extends State<AccountListPage> {
   /// Api
   void _fetching() async {
     String type = widget.listType == AccountListType.ENABLE? '启用列表':'禁用列表';
-    TipHelper.toast(msg: 'Current List -->> $type');
     RemoteData<AccountListData> res =  await AccountRemoter.getAccountList(pageNum: this._pageNum, pageLimit: this._pageLimit);
     // res = MockData.getAccountList(this._pageNum, this._pageLimit);
 
@@ -199,10 +198,10 @@ class AccountListPageState extends State<AccountListPage> {
 
   void _operateDialog(String operate){
     if(operate == 'enable') {
-      TipHelper.alert(context: this._context, title: '是否确定启用账号', content: '启用启用启用启用启用', onLeftPress: (){});
+      Tipper.dialog(context: this._context, title: '是否确定启用账号', content: '启用启用启用启用启用', onLeftPress: (){});
     }
     else if(operate == 'forbidden') {
-      TipHelper.alert(context: this._context, title: '是否确定停用账号', content: '停用停用停用停用停用', onLeftPress: (){});
+      Tipper.dialog(context: this._context, title: '是否确定停用账号', content: '停用停用停用停用停用', onLeftPress: (){});
     }
   }
 }

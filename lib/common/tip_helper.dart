@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kcbweb_account_manage/config/custom_navigation.dart';
 import 'package:kcbweb_account_manage/config/locator.dart';
-import 'package:kcbweb_account_manage/utility/log_helper.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:universal_html/html.dart' as html;
 
 
-class TipHelper {
+
+class Tipper {
+
+  static int index = 0;
 
   static void toast({@required String msg, ToastGravity gravity, Toast toastLength}){
     if(msg != null && msg.isNotEmpty) {
@@ -15,15 +19,15 @@ class TipHelper {
           msg: msg,
           toastLength: toastLength != null? toastLength : Toast.LENGTH_SHORT,
           gravity: gravity != null? gravity : ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
+          timeInSecForIosWeb: 3,
           webPosition: 'center',
-          webBgColor: 'rgba(0,0,0,0.6)',
+          webBgColor: 'rgba(0,0,0,0.7)',
           fontSize: 16.0
       );
     }
   }
 
-  static void alert({BuildContext context, String title, String content, Function onLeftPress}){
+  static void dialog({BuildContext context, String title, String content, Function onLeftPress}){
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -37,6 +41,10 @@ class TipHelper {
           );
         }
     );
+  }
+
+  static void alert(String message){
+    html.window?.alert(message);
   }
 
 }

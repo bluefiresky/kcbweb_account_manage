@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class LayoutTemplate extends StatelessWidget {
@@ -10,13 +11,15 @@ class LayoutTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(
-      builder: (context, sizingInformation) {
-        return Scaffold(
-          backgroundColor: Colors.white,
-          body: Stack(children: [child],),
-        );
-      },
+    return FlutterEasyLoading(
+        child: ResponsiveBuilder(
+          builder: (context, sizingInformation) {
+            return Scaffold(
+              backgroundColor: Colors.white,
+              body: Stack(children: [child],),
+            );
+          },
+        )
     );
   }
 

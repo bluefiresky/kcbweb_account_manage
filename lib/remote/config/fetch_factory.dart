@@ -18,7 +18,7 @@ class FetchFactory {
   static RemoteData generateResData(http.Response response, String path, Map params){
     if(response == null)  {
       Logger.e('\n  path -->> $path \n  params -->> ${convert.jsonEncode(params)}', tag: '${TAG}request');
-      TipHelper.toast(msg:'网络连接异常，请稍后重试');
+      Tipper.toast(msg:'网络连接异常，请稍后重试');
       return null;
     }
     else {
@@ -35,14 +35,14 @@ class FetchFactory {
             String tip;
             String message = jsonRes['message'];
             tip = (message?.isNotEmpty ?? false)? message : '数据获取异常，请稍后重试';
-            TipHelper.toast(msg: tip);
+            Tipper.toast(msg: tip);
 
             Logger.e('\n  statusCode -->> $resStatusCode -- message -->> $tip \n  path -->> $path \n  params -->> ${convert.jsonEncode(params)}', tag: '${TAG}response');
             return null;
           }
         }else {
           Logger.e('\n  http statusCode -->> ${response.statusCode}', tag: '${TAG}response');
-          TipHelper.toast(msg:'网络连接异常，请稍后重试');
+          Tipper.toast(msg:'网络连接异常，请稍后重试');
           return null;
         }
       }catch(exception){

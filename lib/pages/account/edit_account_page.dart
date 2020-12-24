@@ -125,7 +125,6 @@ class EditAccountPageState extends State<EditAccountPage> {
           items: items,
           value: value,
           onChanged: (value) {
-            TipHelper.toast(msg: value.toString());
             List resultList = this.roleList.where((element) => (element.id == value)).toList();
             if(this._accountDetail?.currentRole != null) {
               this._accountDetail.currentRole = resultList.first;

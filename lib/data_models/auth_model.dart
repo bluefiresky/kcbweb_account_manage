@@ -5,29 +5,34 @@ import 'dart:convert';
 class AuthModel {
 
   String userId;
+  String account;
   String token;
 
-  AuthModel(this.userId, this.token);
+  AuthModel(this.userId, this.account, this.token);
 
   AuthModel.fromData(Map data){
     this.userId = data['userId'];
     this.token = data['token'];
+    this.account = data['account'];
   }
 
-  static String toJson(AuthModel model){
-    return jsonEncode(model.toMap());
+  AuthModel.fromJson(String json){
+    Map data = jsonDecode(json);
+    this.userId = data['userId'];
+    this.token = data['token'];
+    this.account = data['account'];
   }
 
-  static AuthModel toModel(String json){
-    return AuthModel.fromData(jsonDecode(json) as Map);
+  String toJson(){
+    return jsonEncode(this.toMap());
   }
 
   Map toMap(){
-    return { 'userId':this.userId, 'token':this.token };
+    return { 'userId':this.userId, 'token':this.token, 'account':this.account };
   }
 
   @override
   String toString() {
-    return 'the userId -->> $userId and the token -->> $token';
+    return 'userId -->> $userId && account -->> $account && token -->> $token ';
   }
 }

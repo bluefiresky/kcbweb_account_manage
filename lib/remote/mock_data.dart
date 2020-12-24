@@ -59,6 +59,6 @@ class MockData {
 
   // -- 用户登录成功数据
   static RemoteData<AuthModel> login(String account, String password){
-    return RemoteData(200, '', AuthModel('000001-$account', 'token-$password-89798w7er98q7we89r7q8w9e'));
+    return RemoteData(200, '', AuthModel('000001-$account', account, 'token-$password-89798w7er98q7we89r7q8w9e'));
   }
 }
