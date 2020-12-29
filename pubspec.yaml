@@ -35,6 +35,8 @@ dependencies:
   colorful_log: 0.0.1
   universal_html: 1.2.1
   flutter_easyloading: 2.2.1
+  crypto: 2.1.5
+  intl: 0.16.1
 
 dev_dependencies:
   flutter_test:
