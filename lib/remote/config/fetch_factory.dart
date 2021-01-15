@@ -98,7 +98,7 @@ class FetchFactory {
 
   /// Caller
   static Caller generateCaller(){
-    return Caller('http', '39.98.209.45', 80, '', 'c4ca4238a0b923820dcc509a6f75849b', '45C8E8E80241E9F863D8ABC750DEAEA2D6F147B3BCB32A066D5E76B6C029E3C9436189F3F5FDE6AB', Random());
+    return Caller('http', '39.98.209.45', 80, '/administrator/api', 'c4ca4238a0b923820dcc509a6f75849b', '45C8E8E80241E9F863D8ABC750DEAEA2D6F147B3BCB32A066D5E76B6C029E3C9436189F3F5FDE6AB', Random());
   }
 
 }
