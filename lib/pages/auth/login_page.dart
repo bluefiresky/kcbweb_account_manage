@@ -35,6 +35,7 @@ class LoginPageState extends State<LoginPage> {
     super.initState();
     AuthModel auth = LoginHelper.getAuth();
     if(auth != null) {
+      this.account = auth.account;
       this._accountController.text = auth.account;
       setState(() {});
     }
@@ -95,7 +96,7 @@ class LoginPageState extends State<LoginPage> {
     else {
       XIndicator.loading((closeLoading) async {
         RemoteData<AuthModel> res = await AuthRemoter.login(this.account, this.password);
-        res = MockData.login(this.account, this.password);
+        // res = MockData.login(this.account, this.password);
         if(res != null) {
           LoginHelper.saveAuth(res.data);
           CommonUtility.timeout(500, (){

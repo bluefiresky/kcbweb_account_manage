@@ -37,7 +37,7 @@ class AccountListPageState extends State<AccountListPage> {
   final double _columnHeight = 66;
   final List _tableHeaderTitles = ['ID', '账号', '账号名称', '操作'];
   List<AccountModel> _dataList = [];
-  Pagination _pagination;
+  Pagination1 _pagination;
   int _pageLimit = 10;
   int _pageNum = 1;
 

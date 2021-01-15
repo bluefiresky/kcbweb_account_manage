@@ -37,7 +37,7 @@ class RoleListPageState extends State<RoleListPage> {
   final double _columnHeight = 88;
   final List _tableHeaderTitles = ['ID', '角色名称', '角色描述', '操作'];
   List<RoleModel> _dataList = [];
-  Pagination _pagination;
+  Pagination1 _pagination;
   int _pageLimit = 10;
   int _pageNum = 1;
 

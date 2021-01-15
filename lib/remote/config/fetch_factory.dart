@@ -1,11 +1,13 @@
 
 import 'dart:convert' as convert;
 import 'dart:developer' as developer;
+import 'dart:math';
 
 import 'package:http/http.dart' as http;
 import 'package:kcbweb_account_manage/common/tip_helper.dart';
 import 'package:kcbweb_account_manage/data_models/remote/remote_data.dart';
 import 'package:kcbweb_account_manage/remote/config/fetch_config.dart';
+import 'package:kcbweb_account_manage/remote/model/api-helper.dart';
 import 'package:kcbweb_account_manage/utility/log_helper.dart';
 
 
@@ -91,6 +93,12 @@ class FetchFactory {
     }catch(exception){
       return generateResData(null, null, params);
     }
+  }
+
+
+  /// Caller
+  static Caller generateCaller(){
+    return Caller('http', '39.98.209.45', 80, '', 'c4ca4238a0b923820dcc509a6f75849b', '45C8E8E80241E9F863D8ABC750DEAEA2D6F147B3BCB32A066D5E76B6C029E3C9436189F3F5FDE6AB', Random());
   }
 
 }

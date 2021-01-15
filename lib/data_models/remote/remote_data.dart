@@ -5,7 +5,7 @@ class RemoteData <T> {
   int statusCode;
   String message;
   T data;
-  Pagination pagination;
+  Pagination1 pagination;
 
   RemoteData(this.statusCode, this.message, this.data, { this.pagination });
 }

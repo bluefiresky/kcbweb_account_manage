@@ -19,7 +19,7 @@ class MockData {
       index++;
       return item;
     }).toList() };
-    Pagination mockPagination = Pagination(total: 100, current: current, pageSize: pageSize);
+    Pagination1 mockPagination = Pagination1(total: 100, current: current, pageSize: pageSize);
 
     return RemoteData(200, '', AccountListData.fromData(mockData), pagination: mockPagination);
   }
@@ -46,7 +46,7 @@ class MockData {
       list.add(item);
     });
     Map mockData = { 'list': list };
-    Pagination mockPagination = Pagination(total: 100, current: current, pageSize: pageSize);
+    Pagination1 mockPagination = Pagination1(total: 100, current: current, pageSize: pageSize);
 
     return RemoteData(200, '', RoleListData.fromData(mockData), pagination: mockPagination);
   }
